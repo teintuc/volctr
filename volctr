@@ -2,8 +2,12 @@
 
 sink=`/usr/bin/pacmd dump  | grep set-default-sink | cut -f 2 -d ' '`
 
+# Unmute the sound
+/usr/bin/pactl set-sink-mute $sink 0
+
+# Change the volume
 case $1 in
-	inc)	pactl -- set-sink-volume $sink '+5%' ;;
-	dec)	pactl -- set-sink-volume $sink '-5%' ;;
+	inc)	/usr/bin/pactl -- set-sink-volume $sink '+5%' ;;
+	dec)	/usr/bin/pactl -- set-sink-volume $sink '-5%' ;;
 	*)		echo "Usage: $0 (inc|dec)" 1>&2 ;;
 esac
