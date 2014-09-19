@@ -10,14 +10,14 @@ Based on:
 
 1. Clone the code:
 
-	git clone https://github.com/CharlesTeinturier/volctr.git
+		git clone https://github.com/CharlesTeinturier/volctr.git
 
 2. Run the makefile (install in /usr/bin by default):
 
-	sudo make install
+		sudo make install
 
 #### Uninstall
 
 1. Run the makefile
 	
-	sudo make uninstall
+		sudo make uninstall
