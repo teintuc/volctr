@@ -1,26 +1,55 @@
 #!/bin/sh
 
-# Get the actual sink
+# Get the sink
 sink=`/usr/bin/pacmd dump  | grep set-default-sink | cut -f 2 -d ' '`
-# Get the current mute status
+# Get the sink mute status
 ismuted=`/usr/bin/pacmd dump | grep set-sink-mute | cut -f 3 -d ' '`
 
-# If the sound is muted
-if [ $ismuted = "yes" ]
-then
-	# Unmute the sound
+# Get the source sink
+sourcesink=`/usr/bin/pacmd dump | grep set-default-source | cut -f 2 -d ' '`
+# Get the source sink mute status
+sourceismuted=`/usr/bin/pacmd dump | grep set-source-mute | grep $sourcesink | cut -f 3 -d ' '`
+
+unmute_sound () {
+    # If the sound is muted
+    if [ $ismuted = "yes" ]
+    then
+	# unmute the sound
 	/usr/bin/pactl set-sink-mute $sink 0
-fi
+    fi
+}
 
 # Change the volume
 case $1 in
 	inc)
-		/usr/bin/pactl -- set-sink-volume $sink '+5%'
+            unmute_sound
+            # Increase the volume
+	    /usr/bin/pactl set-sink-volume $sink '+5%'
 	;;
 	dec)
-		/usr/bin/pactl -- set-sink-volume $sink '-5%'
+            unmute_sound
+            # Decrease the volume
+	    /usr/bin/pactl set-sink-volume $sink '-5%'
 	;;
+        mute)
+            unmute_sound
+            # If the sound is not muted but we want it,
+            # we do mut it
+            if [ $ismuted = "no" ]
+            then
+	        # Mute the sound
+	        /usr/bin/pactl set-sink-mute $sink 1
+            fi
+        ;;
+        micmute)
+            if [ $sourceismuted = "yes" ]
+            then
+                /usr/bin/pactl set-source-mute $sourcesink 0
+            else
+                /usr/bin/pactl set-source-mute $sourcesink 1
+            fi
+        ;;
 	*)
-		echo "Usage: $0 (inc|dec)" 1>&2
+	    echo "Usage: $0 (inc|dec|mute|micmute)" 1>&2
 	;;
 esac
