@@ -84,3 +84,5 @@ case $1 in
     display_error_exit "Usage: $0 (inc|dec|mute|micmute)"
   ;;
 esac
+
+exit 0
