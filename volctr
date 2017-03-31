@@ -12,10 +12,10 @@ PACTL_SOURCE_MUTE="$PACTL set-source-mute"
 VOLUME_UP_VALUE="+5%"
 VOLUME_DOWN_VALUE="-5%"
 
-SPEAKERS_SINK=`$PACMD_DUMP | grep set-default-sink | awk '{print $2}'`
-SPEAKERS_MUTED=`$PACMD_DUMP | grep set-sink-mute | grep $SPEAKERS_SINK | awk '{print $3}'`
-MIC_SYNK=`$PACMD_DUMP | grep set-default-source | awk '{print $2}'`
-MIC_MUTED=`$PACMD_DUMP | grep set-source-mute | grep $MIC_SYNK | awk '{print $3}'`
+SPEAKERS_SINK=$($PACMD_DUMP | grep set-default-sink | awk '{print $2}')
+SPEAKERS_MUTED=$($PACMD_DUMP | grep set-sink-mute | grep $SPEAKERS_SINK | awk '{print $3}')
+MIC_SYNK=$($PACMD_DUMP | grep set-default-source | awk '{print $2}')
+MIC_MUTED=$($PACMD_DUMP | grep set-source-mute | grep $MIC_SYNK | awk '{print $3}')
 
 display_error_exit () {
   echo $1 1>&2
