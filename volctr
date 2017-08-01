@@ -64,25 +64,25 @@ check_exec $PACTL
 
 # Change the volume
 case $1 in
-	inc)
-    # Increase the volume
-    set_speakers_volume $VOLUME_UP_VALUE
-	;;
-	dec)
-    # Decrease the volume
-    set_speakers_volume $VOLUME_DOWN_VALUE
-	;;
-  mute)
-    # Mute or not the speakers
-    speakers_mute
-  ;;
-  micmute)
-    # Mute or not the mic
-    mic_mute
-  ;;
-  *)
-    display_error_exit "Usage: $0 (inc|dec|mute|micmute)"
-  ;;
+    inc)
+        # Increase the volume
+        set_speakers_volume $VOLUME_UP_VALUE
+    ;;
+    dec)
+        # Decrease the volume
+        set_speakers_volume $VOLUME_DOWN_VALUE
+    ;;
+    mute)
+        # Mute or not the speakers
+        speakers_mute
+    ;;
+    micmute)
+        # Mute or not the mic
+        mic_mute
+    ;;
+    *)
+        display_error_exit "Usage: $0 (inc|dec|mute|micmute)"
+    ;;
 esac
 
 exit 0
